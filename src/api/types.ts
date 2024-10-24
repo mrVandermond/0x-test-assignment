@@ -65,6 +65,7 @@ export type CurrentWeather = Omit<CurrentWeatherAPI, 'temperature'> & { temperat
 
 export interface HourlyForecastAPI extends BaseForecast {
   dateTime: string;
+  epochDateTime: number;
   temperature: BaseTemperature;
   weatherIcon: WeatherCondition;
 }
@@ -76,7 +77,7 @@ export interface DailyForecastsAPI {
 }
 
 export interface DailyForecastAPI {
-  date: string;
+  epochDate: number;
   temperature: {
     minimum: BaseTemperature;
     maximum: BaseTemperature;
@@ -91,4 +92,8 @@ export type DailyForecast = Omit<DailyForecastAPI, 'temperature'> & {
     minimum: number;
     maximum: number;
   };
+  roundedTemperature: {
+    minimum: number;
+    maximum: number;
+  }
 };

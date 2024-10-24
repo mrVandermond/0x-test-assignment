@@ -1,8 +1,14 @@
 import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+
 import './style.css';
 
-import { fetchCurrentWeather, fetchDailyForecast, fetchHourlyForecast, fetchLocationByGeoposition } from './api';
-import { useQuery } from '@tanstack/react-query';
+import {
+  fetchCurrentWeather,
+  fetchDailyForecast,
+  fetchHourlyForecast,
+  fetchLocationByGeoposition,
+} from './api';
 import { useGeolocation } from './hooks';
 import { DAY_IN_MS, TEN_MINS_IN_MS, THIRTY_MINS_IN_MS } from './constants';
 import { CurrentWeather } from './components/CurrentWeather';
@@ -48,8 +54,8 @@ export default function App() {
         locationName={location.localizedName}
         temperature={currentWeather.temperature}
         conditionText={currentWeather.weatherText}
-        maxTemperature={dailyForecast[0].temperature.maximum}
-        minTemperature={dailyForecast[0].temperature.minimum}
+        maxTemperature={dailyForecast[0].roundedTemperature.maximum}
+        minTemperature={dailyForecast[0].roundedTemperature.minimum}
       />
 
       <HourlyForecast
@@ -57,7 +63,10 @@ export default function App() {
         currentWeather={currentWeather}
       />
 
-      <DailyForecast dailyForecast={dailyForecast} />
+      <DailyForecast
+        dailyForecast={dailyForecast}
+        currentTemperature={currentWeather.temperature}
+      />
     </main>
   );
 }

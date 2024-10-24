@@ -2,7 +2,11 @@ import { weatherFetcher } from './fetcher';
 import {
   LocationSearchResponse,
   CurrentWeatherAPI,
-  HourlyForecastAPI, DailyForecastsAPI, CurrentWeather, HourlyForecast, DailyForecast
+  HourlyForecastAPI,
+  DailyForecastsAPI,
+  CurrentWeather,
+  HourlyForecast,
+  DailyForecast,
 } from './types';
 
 export async function fetchLocationByGeoposition(lat?: number, lon?: number) {
@@ -11,6 +15,7 @@ export async function fetchLocationByGeoposition(lat?: number, lon?: number) {
   return weatherFetcher.fetch<LocationSearchResponse>('locations/v1/cities/geoposition/search', {
     apikey: process.env.REACT_APP_WEATHER_API_KEY,
     q: `${lat},${lon}`,
+    toplevel: true,
   });
 }
 
@@ -34,9 +39,12 @@ export async function fetchHourlyForecast(locationKey?: string): Promise<HourlyF
     apikey: process.env.REACT_APP_WEATHER_API_KEY,
     metric: true,
   });
+  const currentDateOfMonth = new Date().getDate();
+  const lastForecastIndex = data.findIndex((forecast) => currentDateOfMonth !== (new Date(forecast.dateTime).getDate()));
 
-  return data.map((item) => ({
+  return data.slice(0, lastForecastIndex).map((item) => ({
     ...item,
+    epochDateTime: item.epochDateTime * 1000,
     temperature: Math.round(item.temperature.value),
   }));
 }
@@ -52,6 +60,14 @@ export async function fetchDailyForecast(locationKey?: string): Promise<DailyFor
 
   return data.dailyForecasts.map((item) => ({
     ...item,
-    temperature: { minimum: Math.round(item.temperature.minimum.value), maximum: Math.round(item.temperature.maximum.value) },
+    epochDate: item.epochDate * 1000,
+    temperature: {
+      minimum: item.temperature.minimum.value,
+      maximum: item.temperature.maximum.value,
+    },
+    roundedTemperature: {
+      minimum: Math.round(item.temperature.minimum.value),
+      maximum: Math.round(item.temperature.maximum.value),
+    },
   }));
 }

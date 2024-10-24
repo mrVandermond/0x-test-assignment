@@ -14,7 +14,7 @@ export const HourlyForecast: FC<HourlyForecastProps> = ({ hourlyForecast, curren
     {
       precipitationProbability: null,
       hasPrecipitation: false,
-      dateTime: new Date().toUTCString(),
+      epochDateTime: new Date().valueOf(),
       temperature: currentWeather.temperature,
       weatherIcon: currentWeather.weatherIcon,
     },
@@ -26,9 +26,9 @@ export const HourlyForecast: FC<HourlyForecastProps> = ({ hourlyForecast, curren
       <div className="forecast-title">HOURLY FORECAST</div>
       <div className="scroller">
         <div className="hourly-forecast-list">
-          {finalHourlyForecast.map(({dateTime, temperature, weatherIcon}, index) => (
-            <div className="hourly-forecast-item" key={dateTime}>
-              <div>{index === 0 ? 'Now' : dateFormatter.format(new Date(dateTime))}</div>
+          {finalHourlyForecast.map(({ epochDateTime, temperature, weatherIcon}, index) => (
+            <div className="hourly-forecast-item" key={epochDateTime}>
+              <div>{index === 0 ? 'Now' : dateFormatter.format(epochDateTime)}</div>
               <div>
                 {getWeatherIconByCondition(weatherIcon)}
               </div>

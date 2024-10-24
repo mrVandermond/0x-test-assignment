@@ -154,12 +154,7 @@ body {
    temperatures of each day in comparison
    to the range of the whole period */
 .range-meter {
-  --left: 10%;
-  --right: 0%;
-
   position: absolute;
-  left: var(--left);
-  right: var(--right);
   top: 0;
   bottom: 0;
 
@@ -174,11 +169,21 @@ body {
 
   top: 0;
   bottom: 0;
-  left: calc(-1 * var(--left));
-  right: calc(-1 * var(--right));
+  left: 0;
+  right: 0;
 
-  background: linear-gradient(to right, #96d0a7, #ef8734);
+  background: linear-gradient(to right, #96d0a7, #ef8734) center;
   background-size: 80px 100%;
-  background-position: center;
   border-radius: 5px;
+}
+
+/* Shows current temperature for today */
+.range-current {
+  position: absolute;
+  top: -1px;
+  height: 6px;
+  width: 6px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 1px solid #000;
 }
