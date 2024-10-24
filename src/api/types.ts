@@ -5,7 +5,7 @@ export interface LocationSearchResponse {
 
 interface BaseForecast {
   hasPrecipitation: boolean;
-  precipitationProbability: number;
+  precipitationProbability: number | null;
 }
 
 interface BaseTemperature {
@@ -53,19 +53,29 @@ export enum WeatherCondition {
   NightMostlyCloudySnow,
 }
 
-export interface HourlyForecast extends BaseForecast {
+export interface CurrentWeatherAPI {
+  weatherText: string;
+  weatherIcon: WeatherCondition;
+  temperature: {
+    metric: BaseTemperature;
+  };
+}
+
+export type CurrentWeather = Omit<CurrentWeatherAPI, 'temperature'> & { temperature: number };
+
+export interface HourlyForecastAPI extends BaseForecast {
   dateTime: string;
   temperature: BaseTemperature;
   weatherIcon: WeatherCondition;
-  iconPhrase: string;
-  isDaylight: boolean;
 }
 
-export interface DailyForecasts {
-  dailyForecasts: DailyForecast[];
+export type HourlyForecast = Omit<HourlyForecastAPI, 'temperature'> & { temperature: number };
+
+export interface DailyForecastsAPI {
+  dailyForecasts: DailyForecastAPI[];
 }
 
-export interface DailyForecast {
+export interface DailyForecastAPI {
   date: string;
   temperature: {
     minimum: BaseTemperature;
@@ -75,3 +85,10 @@ export interface DailyForecast {
     icon: WeatherCondition;
   };
 }
+
+export type DailyForecast = Omit<DailyForecastAPI, 'temperature'> & {
+  temperature: {
+    minimum: number;
+    maximum: number;
+  };
+};

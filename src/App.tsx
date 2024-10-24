@@ -1,10 +1,10 @@
 import React from 'react';
 import './style.css';
 
-import { fetchDailyForecast, fetchHourlyForecast, fetchLocationByGeoposition } from './api';
+import { fetchCurrentWeather, fetchDailyForecast, fetchHourlyForecast, fetchLocationByGeoposition } from './api';
 import { useQuery } from '@tanstack/react-query';
 import { useGeolocation } from './hooks';
-import { DAY_IN_MS, THIRTY_MINS_IN_MS } from './constants';
+import { DAY_IN_MS, TEN_MINS_IN_MS, THIRTY_MINS_IN_MS } from './constants';
 import { CurrentWeather } from './components/CurrentWeather';
 import { HourlyForecast } from './components/HourlyForecast';
 import { DailyForecast } from './components/DailyForecast';
@@ -19,6 +19,12 @@ export default function App() {
     queryFn: () => fetchLocationByGeoposition(geolocationCoords?.latitude, geolocationCoords?.longitude),
     enabled: !!geolocationCoords,
   });
+  const { data: currentWeather } = useQuery({
+    staleTime: TEN_MINS_IN_MS,
+    queryKey: ['currentWeather', location],
+    queryFn: () => fetchCurrentWeather(location?.key),
+    enabled: !!location,
+  });
   const { data: hourlyForecast } = useQuery({
     staleTime: THIRTY_MINS_IN_MS,
     queryKey: ['hourlyForecast', location],
@@ -32,7 +38,7 @@ export default function App() {
     enabled: !!location,
   });
 
-  if (!location || !hourlyForecast || !dailyForecast) {
+  if (!location || !currentWeather || !hourlyForecast || !dailyForecast) {
     return <Loader />;
   }
 
@@ -40,13 +46,17 @@ export default function App() {
     <main>
       <CurrentWeather
         locationName={location.localizedName}
-        temperature={hourlyForecast[0].temperature}
-        conditionText={hourlyForecast[0].iconPhrase}
+        temperature={currentWeather.temperature}
+        conditionText={currentWeather.weatherText}
         maxTemperature={dailyForecast[0].temperature.maximum}
         minTemperature={dailyForecast[0].temperature.minimum}
       />
 
-      <HourlyForecast hourlyForecast={hourlyForecast} />
+      <HourlyForecast
+        hourlyForecast={hourlyForecast}
+        currentWeather={currentWeather}
+      />
+
       <DailyForecast dailyForecast={dailyForecast} />
     </main>
   );
