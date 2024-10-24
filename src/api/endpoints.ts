@@ -34,6 +34,6 @@ export async function fetchDailyForecast(locationKey?: string) {
 
   return data.dailyForecasts.map((item) => ({
     ...item,
-    temperature: { minimum: item.temperature.minimum.value, maximum: item.temperature.maximum.value },
+    temperature: { minimum: Math.round(item.temperature.minimum.value), maximum: Math.round(item.temperature.maximum.value) },
   }));
 }

@@ -1,0 +1,1 @@
+export { getWeatherIconByCondition } from './weatherIconByCondition';
