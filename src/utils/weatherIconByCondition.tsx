@@ -1,22 +1,22 @@
 import React from 'react';
 
 import { WeatherCondition } from '../api';
-import { Sunny } from '../weather/Sunny';
-import { PartlyCloudy } from '../weather/PartlyCloudy';
-import { Thunder } from '../weather/Thunder';
-import { Rain } from '../weather/Rain';
-import { NightCloudy } from '../weather/NightCloudy';
-import { Fog } from '../weather/Fog';
-import { HazySunshine } from '../weather/HazySunshine';
-import { Windy } from '../weather/Windy';
-import { Cloudy } from '../weather/Cloudy';
-import { Snow } from '../weather/Snow';
-import { HeavyRain } from '../weather/HeavyRain';
-import { HeavySnow } from '../weather/HeavySnow';
-import { HazyMoon } from '../weather/HazyMoon';
-import { Sleet } from '../weather/Sleet';
-import { NightClear } from '../weather/NightClear';
-import { Icy } from '../weather/Icy';
+import { Sunny } from '../icons/Sunny';
+import { PartlyCloudy } from '../icons/PartlyCloudy';
+import { Thunder } from '../icons/Thunder';
+import { Rain } from '../icons/Rain';
+import { NightCloudy } from '../icons/NightCloudy';
+import { Fog } from '../icons/Fog';
+import { HazySunshine } from '../icons/HazySunshine';
+import { Windy } from '../icons/Windy';
+import { Cloudy } from '../icons/Cloudy';
+import { Snow } from '../icons/Snow';
+import { HeavyRain } from '../icons/HeavyRain';
+import { HeavySnow } from '../icons/HeavySnow';
+import { HazyMoon } from '../icons/HazyMoon';
+import { Sleet } from '../icons/Sleet';
+import { NightClear } from '../icons/NightClear';
+import { Icy } from '../icons/Icy';
 
 const weatherConditionIconMap = {
   [WeatherCondition.Sunny]: <Sunny />,

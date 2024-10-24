@@ -8,6 +8,7 @@ import { DAY_IN_MS, THIRTY_MINS_IN_MS } from './constants';
 import { CurrentWeather } from './components/CurrentWeather';
 import { HourlyForecast } from './components/HourlyForecast';
 import { DailyForecast } from './components/DailyForecast';
+import { Loader } from './icons/Loader';
 
 export default function App() {
   const geolocationCoords = useGeolocation();
@@ -32,7 +33,7 @@ export default function App() {
   });
 
   if (!location || !hourlyForecast || !dailyForecast) {
-    return null;
+    return <Loader />;
   }
 
   return (
