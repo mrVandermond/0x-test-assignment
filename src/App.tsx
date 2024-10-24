@@ -1,83 +1,47 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './style.css';
 
 import { Thunder } from './weather/Thunder';
 import { Rain } from './weather/Rain';
 
-import { currentWeather, hourly, dailyForecast } from './data';
+import { fetchDailyForecast, fetchHourlyForecast, fetchLocationByGeoposition } from './api';
+import { useQuery } from '@tanstack/react-query';
+import { useGeolocation } from './hooks';
+
+const dateFormatter = new Intl.DateTimeFormat('en-US', { hour12: true, hour: 'numeric' });
+const dayFormatter = new Intl.DateTimeFormat('en-US', { weekday: 'short' });
 
 export default function App() {
-  const [current, setCurrent] = useState(currentWeather);
-  const [forecast, setForecast] = useState(hourly);
-  const [daily, setDaily] = useState(dailyForecast);
+  const geolocationCoords = useGeolocation();
 
-  if (!forecast.length || !daily.length) {
-    const forecast = localStorage.getItem('forecast');
-    const daily = localStorage.getItem('daily');
-
-    try {
-      if (forecast) {
-        const forecastData = JSON.parse(forecast);
-        if (forecastData) setForecast(forecastData);
-      }
-
-      if (daily) {
-        const dailyData = JSON.parse(daily);
-        if (dailyData) setDaily(dailyData);
-      }
-    } finally {
-    }
-  }
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((pos) => {
-      const { latitude: lat, longitude: lon } = pos.coords;
-
-      setCurrent({
-        ...current,
-        location: { name: 'Current Location', lat, lon },
-      });
-    });
-  }, []);
-
-  useEffect(() => {
-    async function getWeather() {
-      const apiKey = '';
-      const locationKey = '';
-      const apiUrl = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${apiKey}`;
-
-      const response = await fetch(apiUrl);
-      const data = await response.json();
-      setCurrent(data.current);
-      setForecast(data.hourly);
-
-      localStorage.setItem('forecast', JSON.stringify(data.hourly));
-    }
-  }, []);
+  const { data: location } = useQuery({
+    staleTime: Infinity,
+    queryKey: ['location', geolocationCoords],
+    queryFn: () => fetchLocationByGeoposition(geolocationCoords?.latitude, geolocationCoords?.longitude),
+    enabled: !!geolocationCoords,
+  });
+  const { data: hourlyForecast } = useQuery({
+    staleTime: 30 * 1000,
+    queryKey: ['hourlyForecast', location],
+    queryFn: () => fetchHourlyForecast(location?.key),
+    enabled: !!location,
+  });
+  const { data: dailyForecast } = useQuery({
+    staleTime: 24 * 60 * 1000,
+    queryKey: ['dailyForecast', location],
+    queryFn: () => fetchDailyForecast(location?.key),
+    enabled: !!location,
+  });
 
   return (
     <div>
       <div className="header">
-        <div className="location">{current.location.name}</div>
-        <div className="temp">{current.temp}</div>
+        <div className="location">{location?.localizedName}</div>
+        <div className="temp">{hourlyForecast?.[0].temperature}</div>
         <div className="conditions">
-          {current.cond == 0
-            ? 'Sunny'
-            : current.cond == 1
-            ? 'Partly Cloudy'
-            : current.cond == 2
-            ? 'Cloudy'
-            : current.cond == 3
-            ? 'Light Rain'
-            : current.cond == 4
-            ? 'Rain'
-            : current.cond == 5
-            ? 'Heavy Rain'
-            : current.cond == 6
-            ? 'Thunder'
-            : ''}
+          {hourlyForecast?.[0].iconPhrase}
           <br />
-          H:{current.range.max} L:{current.range.min}
+          H:{dailyForecast?.[0].temperature.maximum} L:{dailyForecast?.[0].temperature.minimum}
         </div>
       </div>
 
@@ -85,9 +49,9 @@ export default function App() {
         <div className="forecast-title">HOURLY FORECAST</div>
         <div className="scroller">
           <div className="forecast-list">
-            {forecast.map(({ datetime, temperature }) => (
-              <div className="forecast-item">
-                <span>{datetime}</span>
+            {hourlyForecast?.map(({ dateTime, temperature }, index) => (
+              <div className="forecast-item" key={dateTime}>
+                <span>{index === 0 ? 'Now' : dateFormatter.format(new Date(dateTime))}</span>
                 <span>
                   <Thunder />
                 </span>
@@ -101,15 +65,14 @@ export default function App() {
       <div className="daily">
         <div className="daily-title">10-DAY FORECAST</div>
         <div className="daily-list">
-          {daily.map(
+          {dailyForecast?.map(
             ({
-              datetime,
-              temp,
-              range: { min, max },
-              periodRange: { min: lowest, max: highest },
-            }) => (
+              temperature,
+              day,
+              date: date
+            }, index) => (
               <div className="daily-row">
-                <div className="daily-time">{datetime}</div>
+                <div className="daily-time">{index === 0 ? 'Today' : dayFormatter.format(new Date(date))}</div>
 
                 <div className="daily-conditions">
                   <Rain />
@@ -117,12 +80,12 @@ export default function App() {
                 </div>
 
                 <div className="daily-range">
-                  <span className="daily-min">{min}°</span>
+                  <span className="daily-min">{temperature.minimum}°</span>
                   <span className="range">
                     <span className="range-meter" />
                     <span className="range-current" />
                   </span>
-                  <span className="daily-max">{max}°</span>
+                  <span className="daily-max">{temperature.maximum}°</span>
                 </div>
               </div>
             )
