@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { memo } from 'react';
 
-export const HeavyRain = () => (
+export const HeavyRain = memo(() => (
   <svg
     width="26"
     height="27"
@@ -13,4 +13,4 @@ export const HeavyRain = () => (
       fill="white"
     />
   </svg>
-);
+));

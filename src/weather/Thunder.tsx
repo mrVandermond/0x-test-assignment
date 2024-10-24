@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { memo } from 'react';
 
-export const Thunder = () => (
+export const Thunder = memo(() => (
   <svg
     width="26"
     height="28"
@@ -13,4 +13,4 @@ export const Thunder = () => (
       fill="white"
     />
   </svg>
-);
+));

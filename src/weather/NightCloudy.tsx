@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { memo } from 'react';
 
-export const NightCloudy = () => (
+export const NightCloudy = memo(() => (
   <svg
     width="29"
     height="20"
@@ -13,4 +13,4 @@ export const NightCloudy = () => (
       fill="white"
     />
   </svg>
-);
+));
