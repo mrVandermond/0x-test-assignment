@@ -36,7 +36,7 @@ export default function App() {
   }
 
   return (
-    <div>
+    <main>
       <CurrentWeather
         locationName={location.localizedName}
         temperature={hourlyForecast[0].temperature}
@@ -47,6 +47,6 @@ export default function App() {
 
       <HourlyForecast hourlyForecast={hourlyForecast} />
       <DailyForecast dailyForecast={dailyForecast} />
-    </div>
+    </main>
   );
 }

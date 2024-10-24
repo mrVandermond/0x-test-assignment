@@ -19,12 +19,10 @@ body {
   min-height: 100vh;
   justify-content: center;
   align-items: center;
-
-  background: linear-gradient(to bottom, #011e33, #625a72);
   color: white;
 }
 
-#root > div {
+#root > main {
   min-width: 320px;
   max-width: 460px;
   padding: 10px;
@@ -163,7 +161,7 @@ body {
   color: #81cffa;
 }
 
-/* Shows the range of lowest and highest 
+/* Shows the range of lowest and highest
    temperatures of the 10-day period */
 .range {
   flex: 1;
@@ -173,8 +171,8 @@ body {
   position: relative;
 }
 
-/* Shows the range of lowest and highest 
-   temperatures of each day in comparison 
+/* Shows the range of lowest and highest
+   temperatures of each day in comparison
    to the range of the whole period */
 .range-meter {
   --left: 10%;
