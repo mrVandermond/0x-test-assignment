@@ -29,7 +29,6 @@ body {
 }
 
 .header {
-  font-weight: 400;
   text-align: center;
   margin: 50px 0 40px;
 }
@@ -38,17 +37,18 @@ body {
   font-size: 3.7rem;
 }
 
-.temp {
+.temperature {
   font-size: 102px;
   line-height: 102px;
   font-weight: 100;
 }
 
-.conditions {
-  font-size: 24px;
+.condition {
+  font-size: 2.4rem;
 }
 
-.forecast {
+.hourly-forecast,
+.daily-forecast {
   border-radius: 15px;
   background-color: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.03);
@@ -57,96 +57,76 @@ body {
 
 .forecast-title {
   border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-  font-size: 0.8em;
+  font-size: 1.3rem;
   letter-spacing: 0.05em;
   padding-bottom: 8px;
-  font-weight: 400;
 }
 
 .scroller {
-  overflow: hidden;
+  overflow: scroll;
 }
 
-.forecast-list {
+.hourly-forecast-list {
   display: flex;
 }
 
-.forecast-item {
+.hourly-forecast-item {
   width: 45px;
   min-width: 45px;
   text-align: center;
   margin: 0 10px;
-  padding: 10px 0 0;
+  padding: 10px 0 0 0;
 }
 
-.forecast-item:first-child {
+.hourly-forecast-item:first-child {
   margin-left: 0;
 }
 
-.forecast-item:last-child {
+.hourly-forecast-item:last-child {
   margin-right: 0;
 }
 
-.forecast-item span {
-  display: block;
+.hourly-forecast-item div + div {
+  margin: 15px 0 0 0;
 }
 
-.forecast-item span + span {
-  margin: 15px 0 0;
-}
-
-.daily {
+.daily-forecast {
   margin: 10px 0 0 0;
-  border-radius: 15px;
-  background-color: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  padding: 15px 15px;
 }
 
-.daily-title,
-.daily-row {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-}
-
-.daily-title {
-  font-size: 1.3rem;
-  letter-spacing: 0.05em;
-  padding-bottom: 8px;
-  font-weight: 400;
-}
-
-.daily-row {
+.daily-forecast-row {
   padding: 5px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
 }
 
-.daily-row:last-child {
-  border-bottom: 0;
+.daily-forecast-row:last-child {
+  border-bottom: none;
 }
 
-.daily-range {
+.daily-forecast-range {
   width: 155px;
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.daily-min,
-.daily-max {
+.daily-temperature-min,
+.daily-temperature-max {
   width: 30px;
   text-align: center;
 }
 
-.daily-min {
+.daily-temperature-min {
   opacity: 0.5;
 }
 
-.daily-conditions {
+.daily-forecast-conditions {
   text-align: center;
-  line-height: 1;
+  line-height: 1em;
 }
 
 .daily-conditions svg {
@@ -154,10 +134,9 @@ body {
 }
 
 .probability {
-  display: block;
-  font-size: 12px;
-  line-height: 0.8;
-  margin: -5px 0 5px;
+  font-size: 1.2rem;
+  line-height: 0.8em;
+  margin-bottom: 5px;
   color: #81cffa;
 }
 

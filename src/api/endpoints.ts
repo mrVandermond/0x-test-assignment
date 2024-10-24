@@ -30,6 +30,7 @@ export async function fetchDailyForecast(locationKey?: string) {
   const data = await weatherFetcher.fetch<DailyForecasts>(`/forecasts/v1/daily/5day/${locationKey}`, {
     apikey: process.env.REACT_APP_WEATHER_API_KEY,
     metric: true,
+    details: true,
   });
 
   return data.dailyForecasts.map((item) => ({

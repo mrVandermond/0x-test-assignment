@@ -12,8 +12,8 @@ export const CurrentWeather: FC<CurrentWeatherProps> = ({ locationName, temperat
   return (
     <header className="header">
       <div className="location">{locationName}</div>
-      <div className="temp">{temperature}°</div>
-      <div className="conditions">
+      <div className="temperature">{temperature}°</div>
+      <div className="condition">
         <span>{conditionText}</span>
         <div>H:{maxTemperature} L:{minTemperature}</div>
       </div>

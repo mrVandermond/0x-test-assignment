@@ -13,6 +13,8 @@ export function useGeolocation(initialValue?: GeolocationCoords) {
       const { latitude, longitude } = pos.coords;
 
       setCoords({ latitude, longitude });
+    }, (error) => {
+      console.error(error);
     });
   }, []);
 

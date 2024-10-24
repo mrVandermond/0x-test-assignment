@@ -10,17 +10,17 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', { hour12: true, hour: 'nu
 
 export const HourlyForecast: FC<HourlyForecastProps> = ({ hourlyForecast }) => {
   return (
-    <section className="forecast">
+    <section className="hourly-forecast">
       <div className="forecast-title">HOURLY FORECAST</div>
       <div className="scroller">
-        <div className="forecast-list">
+        <div className="hourly-forecast-list">
           {hourlyForecast.map(({dateTime, temperature, isDaylight, weatherIcon}, index) => (
-            <div className="forecast-item" key={dateTime}>
-              <span>{index === 0 ? 'Now' : dateFormatter.format(new Date(dateTime))}</span>
-              <span>
+            <div className="hourly-forecast-item" key={dateTime}>
+              <div>{index === 0 ? 'Now' : dateFormatter.format(new Date(dateTime))}</div>
+              <div>
                 {getWeatherIconByCondition(weatherIcon)}
-              </span>
-              <span>{temperature}</span>
+              </div>
+              <div>{temperature}°</div>
             </div>
           ))}
         </div>
