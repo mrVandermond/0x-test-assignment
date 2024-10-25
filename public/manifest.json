@@ -1,0 +1,52 @@
+{
+  "name": "0+X Weather App",
+  "start_url": ".",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "./icons/weather-icon-64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "./icons/weather-icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "./icons/weather-icon-256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "./images/pwa_sample_1.png",
+      "sizes": "480x690",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Main screen"
+    },
+    {
+      "src": "./images/pwa_sample_2.png",
+      "sizes": "480x690",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Main screen"
+    },
+    {
+      "src": "./images/pwa_sample_3.png",
+      "sizes": "480x690",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Main screen"
+    },
+    {
+      "src": "./images/pwa_sample_4.png",
+      "sizes": "480x690",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Main screen"
+    }
+  ]
+}

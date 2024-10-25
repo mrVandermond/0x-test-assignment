@@ -71,11 +71,14 @@ body {
 }
 
 .hourly-forecast-item {
-  width: 45px;
-  min-width: 45px;
+  width: 4.7rem;
+  min-width: 4.7rem;
   text-align: center;
   margin: 0 10px;
   padding: 10px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .hourly-forecast-item:first-child {
