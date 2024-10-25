@@ -1,8 +1,11 @@
 import React, { FC, useMemo } from 'react';
 
-import { DailyForecast as TDailyForecast } from '../api';
+import { DailyForecast as TDailyForecast } from '../../api';
 
-import { DailyForecastItem } from './DailyForecastItem';
+import { DailyForecastItem } from '../DailyForecastItem/DailyForecastItem';
+import { ForecastTitle } from '../ForecastTitle/ForecastTitle';
+
+import styles from './DailyForecast.module.css';
 
 interface DailyForecastProps {
   dailyForecast: TDailyForecast[];
@@ -30,8 +33,8 @@ export const DailyForecast: FC<DailyForecastProps> = ({ dailyForecast, currentTe
   }, [dailyForecast]);
 
   return (
-    <section className="daily-forecast">
-      <div className="forecast-title">10-DAY FORECAST</div>
+    <section className={styles.dailyForecast}>
+      <ForecastTitle>10-day forecast</ForecastTitle>
       {dailyForecast.map(
         (dailyForecastItem, index) => (
           <DailyForecastItem

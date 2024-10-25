@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
 
+import styles from './CurrentWeather.module.css';
+
 interface CurrentWeatherProps {
   locationName: string;
   temperature: number;
@@ -10,12 +12,12 @@ interface CurrentWeatherProps {
 
 export const CurrentWeather: FC<CurrentWeatherProps> = ({ locationName, temperature, conditionText, maxTemperature, minTemperature }) => {
   return (
-    <header className="header">
-      <div className="location">{locationName}</div>
-      <div className="temperature">{temperature}°</div>
-      <div className="condition">
+    <header className={styles.header}>
+      <div className={styles.location}>{locationName}</div>
+      <div className={styles.temperature}>{temperature}°</div>
+      <div className={styles.condition}>
         <span>{conditionText}</span>
-        <div>H:{maxTemperature} L:{minTemperature}</div>
+        <div>H:{maxTemperature}° L:{minTemperature}°</div>
       </div>
     </header>
   )

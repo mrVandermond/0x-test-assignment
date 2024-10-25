@@ -1,0 +1,7 @@
+.dailyForecast {
+    margin-top: 10px;
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 15px;
+}

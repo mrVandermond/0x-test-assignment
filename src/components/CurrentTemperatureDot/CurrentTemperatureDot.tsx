@@ -1,6 +1,8 @@
 import React, { FC, useMemo } from 'react';
 
-import { getTemperatureOffsets } from '../utils';
+import styles from './CurrentTemperatureDot.module.css';
+
+import { getTemperatureOffsets } from '../../utils';
 
 interface CurrentTemperatureDotProps {
   minTemperature: number;
@@ -9,7 +11,7 @@ interface CurrentTemperatureDotProps {
 }
 
 export const CurrentTemperatureDot: FC<CurrentTemperatureDotProps> = ({ minTemperature, maxTemperature, currentTemperature }) => {
-  const styles = useMemo(() => {
+  const style = useMemo(() => {
     const offset = getTemperatureOffsets(minTemperature, maxTemperature, currentTemperature, currentTemperature);
 
     return {
@@ -18,7 +20,7 @@ export const CurrentTemperatureDot: FC<CurrentTemperatureDotProps> = ({ minTempe
   }, [minTemperature, maxTemperature, currentTemperature]);
 
   return (
-    <div className="range-current" style={styles}/>
+    <div className={styles.rangeCurrent} style={style}/>
   );
 };
 

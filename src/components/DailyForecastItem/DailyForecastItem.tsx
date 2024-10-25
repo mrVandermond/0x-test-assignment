@@ -1,9 +1,11 @@
 import React, { FC, useMemo } from 'react';
 
-import { DailyForecast } from '../api';
-import { getTemperatureOffsets, getWeatherIconByCondition } from '../utils';
+import { DailyForecast } from '../../api';
+import { getTemperatureOffsets, getWeatherIconByCondition } from '../../utils';
 
-import { CurrentTemperatureDot } from './CurrentTemperatureDot';
+import { CurrentTemperatureDot } from '../CurrentTemperatureDot/CurrentTemperatureDot';
+
+import styles from './DailyForecastItem.module.css';
 
 interface DailyForecastItemProps {
   dailyForecastItem: DailyForecast;
@@ -31,20 +33,20 @@ export const DailyForecastItem: FC<DailyForecastItemProps> = ({ dailyForecastIte
   }, [minTemperature, maxTemperature, dailyForecastItem]);
 
   return (
-    <div className="daily-forecast-row">
-      <div className="daily-time">{isToday ? 'Today' : dayFormatter.format(dailyForecastItem.epochDate)}</div>
+    <div className={styles.dailyForecastRow}>
+      <div>{isToday ? 'Today' : dayFormatter.format(dailyForecastItem.epochDate)}</div>
 
-      <div className="daily-forecast-conditions">
-        {getWeatherIconByCondition(dailyForecastItem.day.icon)}
+      <div className={styles.dailyForecastConditions}>
+        {getWeatherIconByCondition(dailyForecastItem.day.condition)}
         {dailyForecastItem.day.hasPrecipitation && (
-          <div className="probability">{dailyForecastItem.day.precipitationProbability}%</div>
+          <div className={styles.probability}>{dailyForecastItem.day.precipitationProbability}%</div>
         )}
       </div>
 
-      <div className="daily-forecast-range">
-        <div className="daily-temperature-min">{dailyForecastItem.roundedTemperature.minimum}°</div>
-        <div className="range">
-          <div className="range-meter" style={rangeMeterStyles}/>
+      <div className={styles.dailyForecastRange}>
+        <div className={styles.dailyTemperatureMin}>{dailyForecastItem.roundedTemperature.minimum}°</div>
+        <div className={styles.range}>
+          <div className={styles.rangeMeter} style={rangeMeterStyles}/>
           {isToday && (
             <CurrentTemperatureDot
               currentTemperature={currentTemperature}
@@ -53,7 +55,7 @@ export const DailyForecastItem: FC<DailyForecastItemProps> = ({ dailyForecastIte
             />
           )}
         </div>
-        <div className="daily-temperature-max">{dailyForecastItem.roundedTemperature.maximum}°</div>
+        <div className={styles.dailyTemperatureMax}>{dailyForecastItem.roundedTemperature.maximum}°</div>
       </div>
     </div>
   )

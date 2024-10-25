@@ -9,14 +9,19 @@ import {
   DailyForecast,
 } from './types';
 
-export async function fetchLocationByGeoposition(lat?: number, lon?: number) {
+export async function fetchLocationByGeolocation(lat?: number, lon?: number): Promise<LocationSearchResponse | undefined> {
   if (lat === undefined || lon === undefined) return;
 
-  return weatherFetcher.fetch<LocationSearchResponse>('locations/v1/cities/geoposition/search', {
+  const data = await weatherFetcher.fetch<LocationSearchResponse>('locations/v1/cities/geoposition/search', {
     apikey: process.env.REACT_APP_WEATHER_API_KEY,
     q: `${lat},${lon}`,
     toplevel: true,
   });
+
+  return {
+    key: data.key,
+    localizedName: data.localizedName,
+  };
 }
 
 export async function fetchCurrentWeather(locationKey?: string): Promise<CurrentWeather | undefined> {
@@ -27,7 +32,8 @@ export async function fetchCurrentWeather(locationKey?: string): Promise<Current
   });
 
   return {
-    ...data,
+    condition: data.weatherIcon,
+    conditionText: data.weatherText,
     temperature: Math.round(data.temperature.metric.value),
   };
 }
@@ -43,8 +49,11 @@ export async function fetchHourlyForecast(locationKey?: string): Promise<HourlyF
   const lastForecastIndex = data.findIndex((forecast) => currentDateOfMonth !== (new Date(forecast.dateTime).getDate()));
 
   return data.slice(0, lastForecastIndex).map((item) => ({
-    ...item,
+    dateTime: item.dateTime,
     epochDateTime: item.epochDateTime * 1000,
+    condition: item.weatherIcon,
+    hasPrecipitation: item.hasPrecipitation,
+    precipitationProbability: item.precipitationProbability,
     temperature: Math.round(item.temperature.value),
   }));
 }
@@ -59,15 +68,19 @@ export async function fetchDailyForecast(locationKey?: string): Promise<DailyFor
   });
 
   return data.dailyForecasts.map((item) => ({
-    ...item,
+    day: {
+      condition: item.day.icon,
+      hasPrecipitation: item.day.hasPrecipitation,
+      precipitationProbability: item.day.precipitationProbability,
+    },
     epochDate: item.epochDate * 1000,
     temperature: {
       minimum: item.temperature.minimum.value,
       maximum: item.temperature.maximum.value,
     },
     roundedTemperature: {
-      minimum: Math.round(item.temperature.minimum.value),
-      maximum: Math.round(item.temperature.maximum.value),
+      minimum: Math.floor(item.temperature.minimum.value),
+      maximum: Math.ceil(item.temperature.maximum.value),
     },
   }));
 }

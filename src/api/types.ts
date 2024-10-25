@@ -61,7 +61,11 @@ export interface CurrentWeatherAPI {
   };
 }
 
-export type CurrentWeather = Omit<CurrentWeatherAPI, 'temperature'> & { temperature: number };
+export interface CurrentWeather {
+  condition: WeatherCondition;
+  conditionText: string;
+  temperature: number;
+}
 
 export interface HourlyForecastAPI extends BaseForecast {
   dateTime: string;
@@ -70,7 +74,10 @@ export interface HourlyForecastAPI extends BaseForecast {
   weatherIcon: WeatherCondition;
 }
 
-export type HourlyForecast = Omit<HourlyForecastAPI, 'temperature'> & { temperature: number };
+export type HourlyForecast = Omit<HourlyForecastAPI, 'temperature' | 'weatherIcon'> & {
+  temperature: number;
+  condition: WeatherCondition;
+};
 
 export interface DailyForecastsAPI {
   dailyForecasts: DailyForecastAPI[];
@@ -87,7 +94,7 @@ export interface DailyForecastAPI {
   };
 }
 
-export type DailyForecast = Omit<DailyForecastAPI, 'temperature'> & {
+export type DailyForecast = Omit<DailyForecastAPI, 'temperature' | 'day'> & {
   temperature: {
     minimum: number;
     maximum: number;
@@ -95,5 +102,8 @@ export type DailyForecast = Omit<DailyForecastAPI, 'temperature'> & {
   roundedTemperature: {
     minimum: number;
     maximum: number;
-  }
+  };
+  day: BaseForecast & {
+    condition: WeatherCondition;
+  };
 };

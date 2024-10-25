@@ -2,11 +2,13 @@ import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { QueryClient } from '@tanstack/react-query';
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 
-import App from './App';
+import './style.css';
+
+import App from './components/App/App';
 import { getGradientByTime } from './utils';
 import { DAY_IN_MS } from './constants';
-import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 
 const start = () => {
   const rootElement = document.getElementById('root');

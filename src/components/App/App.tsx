@@ -1,20 +1,20 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-import './style.css';
-
 import {
   fetchCurrentWeather,
   fetchDailyForecast,
   fetchHourlyForecast,
-  fetchLocationByGeoposition,
-} from './api';
-import { useGeolocation } from './hooks';
-import { DAY_IN_MS, TEN_MINS_IN_MS, THIRTY_MINS_IN_MS } from './constants';
-import { CurrentWeather } from './components/CurrentWeather';
-import { HourlyForecast } from './components/HourlyForecast';
-import { DailyForecast } from './components/DailyForecast';
-import { Loader } from './icons/Loader';
+  fetchLocationByGeolocation,
+} from '../../api';
+import { useGeolocation } from '../../hooks';
+import { DAY_IN_MS, TEN_MINS_IN_MS, THIRTY_MINS_IN_MS } from '../../constants';
+import { CurrentWeather } from '../CurrentWeather/CurrentWeather';
+import { HourlyForecast } from '../HourlyForecast/HourlyForecast';
+import { DailyForecast } from '../DailyForecast/DailyForecast';
+import { Loader } from '../../icons/Loader';
+
+import styles from './App.module.css';
 
 export default function App() {
   const geolocationCoords = useGeolocation();
@@ -22,7 +22,7 @@ export default function App() {
   const { data: location } = useQuery({
     staleTime: Infinity,
     queryKey: ['location', geolocationCoords],
-    queryFn: () => fetchLocationByGeoposition(geolocationCoords?.latitude, geolocationCoords?.longitude),
+    queryFn: () => fetchLocationByGeolocation(geolocationCoords?.latitude, geolocationCoords?.longitude),
     enabled: !!geolocationCoords,
   });
   const { data: currentWeather } = useQuery({
@@ -49,11 +49,11 @@ export default function App() {
   }
 
   return (
-    <main>
+    <main className={styles.main}>
       <CurrentWeather
         locationName={location.localizedName}
         temperature={currentWeather.temperature}
-        conditionText={currentWeather.weatherText}
+        conditionText={currentWeather.conditionText}
         maxTemperature={dailyForecast[0].roundedTemperature.maximum}
         minTemperature={dailyForecast[0].roundedTemperature.minimum}
       />
