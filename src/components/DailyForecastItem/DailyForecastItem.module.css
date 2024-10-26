@@ -4,7 +4,7 @@
     grid-template-columns: 1fr 1fr 2fr;
     align-items: center;
     font-size: 2rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    border-bottom: 1px solid var(--primary-white-color);
     min-height: 52px;
 }
 
@@ -27,7 +27,7 @@
 }
 
 .dailyTemperatureMin {
-    opacity: 0.5;
+    color: var(--primary-white-color);
 }
 
 .dailyForecastConditions {
@@ -49,7 +49,7 @@
 /* Shows the range of lowest and highest
    temperatures of the 10-day period */
 .range {
-    flex: 1;
+    flex: 1 1;
     background-color: rgba(0, 0, 0, 0.15);
     height: 4px;
     border-radius: 5px;
@@ -79,6 +79,5 @@
     right: 0;
 
     background: linear-gradient(to right, #96d0a7, #ef8734) center;
-    background-size: 80px 100%;
     border-radius: 5px;
 }

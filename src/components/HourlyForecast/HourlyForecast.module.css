@@ -1,7 +1,7 @@
 .hourlyForecast {
     border-radius: 15px;
-    background-color: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.03);
+    background-color: var(--light-white-color);
+    border: 1px solid var(--light-white-color);
     padding: 15px;
 }
 

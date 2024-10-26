@@ -17,7 +17,13 @@ interface DailyForecastItemProps {
 
 const dayFormatter = new Intl.DateTimeFormat('en-US', { weekday: 'short' });
 
-export const DailyForecastItem: FC<DailyForecastItemProps> = ({ dailyForecastItem, minTemperature, maxTemperature, isToday, currentTemperature }) => {
+export const DailyForecastItem: FC<DailyForecastItemProps> = ({
+  dailyForecastItem,
+  minTemperature,
+  maxTemperature,
+  isToday,
+  currentTemperature,
+}) => {
   const rangeMeterStyles = useMemo(() => {
     const offset = getTemperatureOffsets(
       minTemperature,

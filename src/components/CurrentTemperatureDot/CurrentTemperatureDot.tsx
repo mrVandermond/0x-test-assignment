@@ -10,7 +10,11 @@ interface CurrentTemperatureDotProps {
   currentTemperature: number;
 }
 
-export const CurrentTemperatureDot: FC<CurrentTemperatureDotProps> = ({ minTemperature, maxTemperature, currentTemperature }) => {
+export const CurrentTemperatureDot: FC<CurrentTemperatureDotProps> = ({
+  minTemperature,
+  maxTemperature,
+  currentTemperature,
+}) => {
   const rangeCurrent = useRef<HTMLDivElement | null>(null);
   useLayoutEffect(() => {
     if (!rangeCurrent.current) return;

@@ -1,3 +1,3 @@
 export { getWeatherIconByCondition } from './weatherIconByCondition';
-export { getGradientByTime } from './getGradientByTime';
+export { getGradientClassByTime } from './getGradientClassByTime';
 export { getTemperatureOffsets } from './getTemperatureOffsets';

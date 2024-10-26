@@ -1,10 +1,7 @@
 .backgroundLoaderContainer {
     position: fixed;
-    display: flex;
-    justify-content: center;
     bottom: 5%;
-    left: 0;
-    width: 100vw;
+    left: calc(50% - 57px);
     z-index: 1000;
 }
 

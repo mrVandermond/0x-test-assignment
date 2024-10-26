@@ -7,7 +7,7 @@ import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client
 import './style.css';
 
 import App from './components/App/App';
-import { getGradientByTime } from './utils';
+import { getGradientClassByTime } from './utils';
 import { DAY_IN_MS } from './constants';
 
 const start = () => {
@@ -31,8 +31,7 @@ const start = () => {
   });
 
   // Set the background of root element
-  rootElement.style.background = getGradientByTime();
-
+  rootElement.classList.add(getGradientClassByTime());
 
   const root = createRoot(rootElement);
   const persistOptions = {
