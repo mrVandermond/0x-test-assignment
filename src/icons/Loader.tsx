@@ -1,9 +1,13 @@
 import React, { memo } from 'react';
 
-export const Loader = memo(() => (
+interface LoaderProps {
+  size?: number;
+}
+
+export const Loader = memo<LoaderProps>(({ size = 38 }) => (
   <svg
-    width="38"
-    height="38"
+    width={size}
+    height={size}
     viewBox="0 0 38 38"
     xmlns="http://www.w3.org/2000/svg"
     stroke="#fff"

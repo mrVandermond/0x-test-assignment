@@ -44,7 +44,7 @@ export const DailyForecastItem: FC<DailyForecastItemProps> = ({ dailyForecastIte
       </div>
 
       <div className={styles.dailyForecastRange}>
-        <div className={styles.dailyTemperatureMin}>{dailyForecastItem.roundedTemperature.minimum}°</div>
+        <div className={styles.dailyTemperatureMin}>{dailyForecastItem.temperature.minimum}°</div>
         <div className={styles.range}>
           <div className={styles.rangeMeter} style={rangeMeterStyles}/>
           {isToday && (
@@ -55,7 +55,7 @@ export const DailyForecastItem: FC<DailyForecastItemProps> = ({ dailyForecastIte
             />
           )}
         </div>
-        <div className={styles.dailyTemperatureMax}>{dailyForecastItem.roundedTemperature.maximum}°</div>
+        <div className={styles.dailyTemperatureMax}>{dailyForecastItem.temperature.maximum}°</div>
       </div>
     </div>
   )

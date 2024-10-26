@@ -1,9 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-interface GeolocationCoords {
-  latitude: number;
-  longitude: number;
-}
+import { GeolocationCoords } from '../types/geolocation';
 
 const GEOLOCATION_CACHE_KEY = 'geolocation';
 
@@ -24,6 +21,14 @@ function cacheGeolocationCoords(coords: GeolocationCoords) {
 
 export function useGeolocation(initialValue?: GeolocationCoords) {
   const [coords, setCoords] = useState(initialValue);
+  const [error, setError] = useState<GeolocationPositionError | null>(null);
+  const [rerenderDependency, forceRerender] = useState({});
+  const [isAwaitingGeolocation, setIsAwaitingGeolocation] = useState(false);
+
+  const refetchGeolocation = useCallback(() => {
+    setError(null);
+    forceRerender({});
+  }, []);
 
   useEffect(() => {
     const cachedGeolocation = restoreGeolocationCoords();
@@ -34,6 +39,7 @@ export function useGeolocation(initialValue?: GeolocationCoords) {
   }, []);
 
   useEffect(() => {
+    setIsAwaitingGeolocation(true);
     navigator.geolocation.getCurrentPosition((pos) => {
       const { latitude, longitude } = pos.coords;
       const coords = {
@@ -43,10 +49,18 @@ export function useGeolocation(initialValue?: GeolocationCoords) {
 
       setCoords(coords);
       cacheGeolocationCoords(coords);
+      setIsAwaitingGeolocation(false);
     }, (error) => {
       console.error(error);
+      setError(error);
+      setIsAwaitingGeolocation(false);
     });
-  }, []);
+  }, [rerenderDependency]);
 
-  return coords;
+  return {
+    coords,
+    error,
+    refetchGeolocation,
+    isAwaitingGeolocation,
+  };
 }

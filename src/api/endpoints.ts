@@ -1,6 +1,6 @@
 import { weatherFetcher } from './fetcher';
 import {
-  LocationSearchResponse,
+  Location,
   CurrentWeatherAPI,
   HourlyForecastAPI,
   DailyForecastsAPI,
@@ -9,10 +9,10 @@ import {
   DailyForecast,
 } from './types';
 
-export async function fetchLocationByGeolocation(lat?: number, lon?: number): Promise<LocationSearchResponse | undefined> {
+export async function fetchLocationByGeolocation(lat?: number, lon?: number): Promise<Location | undefined> {
   if (lat === undefined || lon === undefined) return;
 
-  const data = await weatherFetcher.fetch<LocationSearchResponse>('locations/v1/cities/geoposition/search', {
+  const data = await weatherFetcher.fetch<Location>('locations/v1/cities/geoposition/search', {
     apikey: process.env.REACT_APP_WEATHER_API_KEY,
     q: `${lat},${lon}`,
     toplevel: true,
@@ -75,10 +75,6 @@ export async function fetchDailyForecast(locationKey?: string): Promise<DailyFor
     },
     epochDate: item.epochDate * 1000,
     temperature: {
-      minimum: item.temperature.minimum.value,
-      maximum: item.temperature.maximum.value,
-    },
-    roundedTemperature: {
       minimum: Math.floor(item.temperature.minimum.value),
       maximum: Math.ceil(item.temperature.maximum.value),
     },

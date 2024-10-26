@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, useLayoutEffect, useRef } from 'react';
 
 import styles from './CurrentTemperatureDot.module.css';
 
@@ -11,16 +11,20 @@ interface CurrentTemperatureDotProps {
 }
 
 export const CurrentTemperatureDot: FC<CurrentTemperatureDotProps> = ({ minTemperature, maxTemperature, currentTemperature }) => {
-  const style = useMemo(() => {
+  const rangeCurrent = useRef<HTMLDivElement | null>(null);
+  useLayoutEffect(() => {
+    if (!rangeCurrent.current) return;
+
     const offset = getTemperatureOffsets(minTemperature, maxTemperature, currentTemperature, currentTemperature);
 
-    return {
-      left: `${offset.leftOffset}%`,
-    }
+    rangeCurrent.current.style.setProperty('--left-offset', `${offset.leftOffset}%`);
   }, [minTemperature, maxTemperature, currentTemperature]);
 
   return (
-    <div className={styles.rangeCurrent} style={style}/>
+    <div
+      ref={rangeCurrent}
+      className={styles.rangeCurrent}
+    />
   );
 };
 

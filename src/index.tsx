@@ -21,8 +21,9 @@ const start = () => {
     defaultOptions: {
       queries: {
         gcTime: DAY_IN_MS,
-      }
-    }
+        retry: false,
+      },
+    },
   });
 
   const localStoragePersister = createSyncStoragePersister({
@@ -48,7 +49,7 @@ const start = () => {
 }
 
 const registerSW = () => {
-  if (!('serviceWorker' in navigator)) return;
+  if (!('serviceWorker' in navigator) || process.env.NODE_ENV === 'development') return;
 
   navigator.serviceWorker.register('./service-worker.js')
     .catch((error) => console.error(error));

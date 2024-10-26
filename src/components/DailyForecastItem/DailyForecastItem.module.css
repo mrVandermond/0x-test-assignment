@@ -2,8 +2,10 @@
     padding: 5px 0;
     display: grid;
     grid-template-columns: 1fr 1fr 2fr;
+    align-items: center;
     font-size: 2rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    min-height: 52px;
 }
 
 .dailyForecastRow:last-child {
@@ -12,7 +14,7 @@
 
 .dailyForecastRange {
     margin-left: auto;
-    width: 155px;
+    width: 175px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -20,7 +22,7 @@
 
 .dailyTemperatureMin,
 .dailyTemperatureMax {
-    width: 30px;
+    width: 40px;
     text-align: center;
 }
 

@@ -1,26 +1,29 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
+
+import { Location, useCurrentWeatherQuery, useTemperatureRangeForTodayQuery } from '../../api';
 
 import styles from './CurrentWeather.module.css';
 
 interface CurrentWeatherProps {
-  locationName: string;
-  temperature: number;
-  conditionText: string;
-  maxTemperature: number;
-  minTemperature: number;
+  location: Location;
 }
 
-export const CurrentWeather: FC<CurrentWeatherProps> = ({ locationName, temperature, conditionText, maxTemperature, minTemperature }) => {
+export const CurrentWeather: FC<CurrentWeatherProps> = memo(({ location }) => {
+  const { data: currentWeather } = useCurrentWeatherQuery(location);
+  const { data: temperatureRange } = useTemperatureRangeForTodayQuery(location);
+
+  if (!currentWeather || !temperatureRange) return null;
+
   return (
-    <header className={styles.header}>
-      <div className={styles.location}>{locationName}</div>
-      <div className={styles.temperature}>{temperature}°</div>
+    <section className={styles.header}>
+      <div className={styles.location}>{location.localizedName}</div>
+      <div className={styles.temperature}>{currentWeather.temperature}°</div>
       <div className={styles.condition}>
-        <span>{conditionText}</span>
-        <div>H:{maxTemperature}° L:{minTemperature}°</div>
+        <span>{currentWeather.conditionText}</span>
+        <div>H:{temperatureRange.max}° L:{temperatureRange.min}°</div>
       </div>
-    </header>
-  )
-};
+    </section>
+  );
+});
 
 CurrentWeather.displayName = 'CurrentWeather';

@@ -1,36 +1,26 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, memo } from 'react';
 
-import { DailyForecast as TDailyForecast } from '../../api';
-
+import {
+  Location,
+  useCurrentTemperatureQuery,
+  useDailyForecastQuery,
+  useTemperatureRangeQuery,
+} from '../../api';
 import { DailyForecastItem } from '../DailyForecastItem/DailyForecastItem';
 import { ForecastTitle } from '../ForecastTitle/ForecastTitle';
 
 import styles from './DailyForecast.module.css';
 
 interface DailyForecastProps {
-  dailyForecast: TDailyForecast[];
-  currentTemperature: number;
+  location: Location;
 }
 
-export const DailyForecast: FC<DailyForecastProps> = ({ dailyForecast, currentTemperature }) => {
-  const minTemperature = useMemo(() => {
-    return dailyForecast.reduce((acc, item) => {
-      if (acc > item.temperature.minimum) {
-        return item.temperature.minimum;
-      }
+export const DailyForecast: FC<DailyForecastProps> = memo(({ location }) => {
+  const { data: dailyForecast } = useDailyForecastQuery(location);
+  const { data: currentTemperature } = useCurrentTemperatureQuery(location);
+  const { data: temperatureRange } = useTemperatureRangeQuery(location);
 
-      return acc;
-    }, Infinity);
-  }, []);
-  const maxTemperature = useMemo(() => {
-    return dailyForecast.reduce((acc, item) => {
-      if (acc < item.temperature.maximum) {
-        return item.temperature.maximum;
-      }
-
-      return acc;
-    }, -Infinity);
-  }, [dailyForecast]);
+  if (!dailyForecast || currentTemperature === undefined || !temperatureRange) return null;
 
   return (
     <section className={styles.dailyForecast}>
@@ -40,8 +30,8 @@ export const DailyForecast: FC<DailyForecastProps> = ({ dailyForecast, currentTe
           <DailyForecastItem
             key={dailyForecastItem.epochDate}
             dailyForecastItem={dailyForecastItem}
-            minTemperature={minTemperature}
-            maxTemperature={maxTemperature}
+            minTemperature={temperatureRange.min}
+            maxTemperature={temperatureRange.max}
             currentTemperature={currentTemperature}
             isToday={index === 0}
           />
@@ -49,6 +39,6 @@ export const DailyForecast: FC<DailyForecastProps> = ({ dailyForecast, currentTe
       )}
     </section>
   );
-};
+});
 
 DailyForecast.displayName = 'DailyForecast';

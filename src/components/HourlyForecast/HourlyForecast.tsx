@@ -1,30 +1,31 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, memo, useMemo } from 'react';
 
-import { CurrentWeather, HourlyForecast as THourlyForecast } from '../../api';
+import {
+  HourlyForecast as THourlyForecast,
+  Location, useCurrentHourlyForecastQuery, useHourlyForecastQuery
+} from '../../api';
 import { getWeatherIconByCondition } from '../../utils';
 import { ForecastTitle } from '../ForecastTitle/ForecastTitle';
 
 import styles from './HourlyForecast.module.css';
 
 interface HourlyForecastProps {
-  currentWeather: CurrentWeather;
-  hourlyForecast: THourlyForecast[];
+  location: Location;
 }
 
 const dateFormatter = new Intl.DateTimeFormat('en-US', { hour12: true, hour: 'numeric' });
 
-export const HourlyForecast: FC<HourlyForecastProps> = ({ hourlyForecast, currentWeather }) => {
-  const finalHourlyForecast = useMemo<THourlyForecast[]>(() => ([
-    {
-      precipitationProbability: null,
-      hasPrecipitation: false,
-      epochDateTime: new Date().valueOf(),
-      temperature: currentWeather.temperature,
-      condition: currentWeather.condition,
-      dateTime: new Date().toUTCString(),
-    },
-    ...hourlyForecast
-  ]), [hourlyForecast, currentWeather]);
+export const HourlyForecast: FC<HourlyForecastProps> = memo(({ location }) => {
+  const { data: hourlyForecast } = useHourlyForecastQuery(location);
+  const { data: currentHourlyForecast } = useCurrentHourlyForecastQuery(location);
+
+  const finalHourlyForecast = useMemo<THourlyForecast[]>(() => {
+    if (!currentHourlyForecast || !hourlyForecast) return [];
+
+    return [currentHourlyForecast, ...hourlyForecast];
+  }, [hourlyForecast, currentHourlyForecast]);
+
+  if (!hourlyForecast || !currentHourlyForecast) return null;
 
   return (
     <section className={styles.hourlyForecast}>
@@ -44,6 +45,6 @@ export const HourlyForecast: FC<HourlyForecastProps> = ({ hourlyForecast, curren
       </div>
     </section>
   );
-};
+});
 
 HourlyForecast.displayName = 'HourlyForecast';

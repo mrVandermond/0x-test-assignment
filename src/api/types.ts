@@ -1,4 +1,4 @@
-export interface LocationSearchResponse {
+export interface Location {
   key: string;
   localizedName: string;
 }
@@ -96,10 +96,6 @@ export interface DailyForecastAPI {
 
 export type DailyForecast = Omit<DailyForecastAPI, 'temperature' | 'day'> & {
   temperature: {
-    minimum: number;
-    maximum: number;
-  };
-  roundedTemperature: {
     minimum: number;
     maximum: number;
   };

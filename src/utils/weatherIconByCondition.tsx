@@ -17,6 +17,7 @@ import { HazyMoon } from '../icons/HazyMoon';
 import { Sleet } from '../icons/Sleet';
 import { NightClear } from '../icons/NightClear';
 import { Icy } from '../icons/Icy';
+import { LightRain } from '../icons/LightRain';
 
 const weatherConditionIconMap = {
   [WeatherCondition.Sunny]: <Sunny />,
@@ -28,9 +29,9 @@ const weatherConditionIconMap = {
   [WeatherCondition.Cloudy]: <Cloudy />,
   [WeatherCondition.Dreary]: <Cloudy />,
   [WeatherCondition.Fog]: <Fog />,
-  [WeatherCondition.Showers]: <HeavyRain />,
-  [WeatherCondition.MostlyCloudyShowers]: <HeavyRain />,
-  [WeatherCondition.PartlySunnyShowers]: <HeavyRain />,
+  [WeatherCondition.Showers]: <LightRain />,
+  [WeatherCondition.MostlyCloudyShowers]: <LightRain />,
+  [WeatherCondition.PartlySunnyShowers]: <LightRain />,
   [WeatherCondition.ThunderStorms]: <Thunder />,
   [WeatherCondition.MostlyCloudyThunderStorms]: <Thunder />,
   [WeatherCondition.PartlySunnyThunderStorms]: <Thunder />,
