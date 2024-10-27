@@ -6,6 +6,7 @@ export interface Location {
 interface BaseForecast {
   hasPrecipitation: boolean;
   precipitationProbability: number | null;
+  precipitationType?: PrecipitationType,
 }
 
 interface BaseTemperature {
@@ -51,6 +52,13 @@ export enum WeatherCondition {
   NightMostlyCloudyThunderStorms,
   NightMostlyCloudyFlurries,
   NightMostlyCloudySnow,
+}
+
+export enum PrecipitationType {
+  Rain = 'Rain',
+  Snow = 'Snow',
+  Ice = 'Ice',
+  Mixed = 'Mixed',
 }
 
 export interface CurrentWeatherAPI {

@@ -43,7 +43,7 @@ export const DailyForecastItem: FC<DailyForecastItemProps> = ({
       <div>{isToday ? 'Today' : dayFormatter.format(dailyForecastItem.epochDate)}</div>
 
       <div className={styles.dailyForecastConditions}>
-        {getWeatherIconByCondition(dailyForecastItem.day.condition)}
+        {getWeatherIconByCondition(dailyForecastItem.day.condition, dailyForecastItem.day.precipitationType)}
         {dailyForecastItem.day.hasPrecipitation && (
           <div className={styles.probability}>{dailyForecastItem.day.precipitationProbability}%</div>
         )}

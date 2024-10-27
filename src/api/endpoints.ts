@@ -72,6 +72,7 @@ export async function fetchDailyForecast(locationKey?: string): Promise<DailyFor
       condition: item.day.icon,
       hasPrecipitation: item.day.hasPrecipitation,
       precipitationProbability: item.day.precipitationProbability,
+      precipitationType: item.day.precipitationType,
     },
     epochDate: item.epochDate * 1000,
     temperature: {

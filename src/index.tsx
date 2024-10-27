@@ -28,6 +28,7 @@ const start = () => {
 
   const localStoragePersister = createSyncStoragePersister({
     storage: window.localStorage,
+    key: '0+X_WeatherApp',
   });
 
   // Set the background of root element

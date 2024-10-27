@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { WeatherCondition } from '../api';
+import { PrecipitationType, WeatherCondition } from '../api';
 import { Sunny } from '../icons/Sunny';
 import { PartlyCloudy } from '../icons/PartlyCloudy';
 import { Thunder } from '../icons/Thunder';
@@ -60,6 +60,22 @@ const weatherConditionIconMap = {
   [WeatherCondition.NightMostlyCloudySnow]: <Snow />,
 };
 
-export function getWeatherIconByCondition(condition: WeatherCondition) {
-  return weatherConditionIconMap[condition];
+const weatherPrecipitationIconMap = {
+  [PrecipitationType.Rain]: <Rain />,
+  [PrecipitationType.Snow]: <Snow />,
+  [PrecipitationType.Ice]: <Icy/>,
+  [PrecipitationType.Mixed]: <Sleet />,
+};
+
+/**
+ * Returns weather condition icon in accordance with passed condition type and precipitation type
+ * @param conditionType - weather condition type
+ * @param precipitationType - weather precipitation type
+ */
+export function getWeatherIconByCondition(conditionType: WeatherCondition, precipitationType?: PrecipitationType) {
+  if (precipitationType) {
+    return weatherPrecipitationIconMap[precipitationType];
+  }
+
+  return weatherConditionIconMap[conditionType];
 }
