@@ -3,13 +3,7 @@ const staticPaths = [
   '/',
   'favicon.ico',
   'manifest.json',
-  'icons/weather-icon-64.png',
-  'icons/weather-icon-128.png',
-  'icons/weather-icon-256.png',
-  'images/pwa_sample_1.png',
-  'images/pwa_sample_2.png',
-  'images/pwa_sample_3.png',
-  'images/pwa_sample_4.png',
+  'icons/weather-icon-144.png',
 ];
 const files = self.__WB_MANIFEST.map((file) => {
   if (typeof file === 'string') return file;
