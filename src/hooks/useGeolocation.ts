@@ -19,13 +19,17 @@ function cacheGeolocationCoords(coords: GeolocationCoords) {
   localStorage.setItem(GEOLOCATION_CACHE_KEY, JSON.stringify(coords));
 }
 
-export function useGeolocation(initialValue?: GeolocationCoords) {
-  const [coords, setCoords] = useState(initialValue);
+/**
+ * Requests geolocation coordinates
+ * Exposes coordinates, retry function, error and awaiting status
+ */
+export function useGeolocation() {
+  const [coords, setCoords] = useState<GeolocationCoords | undefined>(undefined);
   const [error, setError] = useState<GeolocationPositionError | null>(null);
   const [rerenderDependency, forceRerender] = useState({});
   const [isAwaitingGeolocation, setIsAwaitingGeolocation] = useState(false);
 
-  const refetchGeolocation = useCallback(() => {
+  const retryRequestGeolocation = useCallback(() => {
     setError(null);
     forceRerender({});
   }, []);
@@ -60,7 +64,7 @@ export function useGeolocation(initialValue?: GeolocationCoords) {
   return {
     coords,
     error,
-    refetchGeolocation,
+    retryRequestGeolocation,
     isAwaitingGeolocation,
   };
 }

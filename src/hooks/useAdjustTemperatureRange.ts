@@ -3,7 +3,14 @@ import { useEffect } from 'react';
 import { CurrentWeather, DailyForecast, Location } from '../api';
 import { CURRENT_WEATHER_QUERY_KEY, DAILY_FORECAST_QUERY_KEY } from '../constants';
 
-export const useAdjustTemperatureRange = (isLoading: boolean, isFetching: boolean, location: Location | undefined) => {
+/**
+ * Adjusts forecast data when current weather temperature lower or higher than
+ * forecasted min or max value for current day
+ *
+ * @param isFetching - fetching flag
+ * @param location - location object from search API
+ */
+export const useAdjustTemperatureRange = (isFetching: boolean, location: Location | undefined) => {
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -43,5 +50,5 @@ export const useAdjustTemperatureRange = (isLoading: boolean, isFetching: boolea
         ...dailyForecast.data.slice(1),
       ]);
     }
-  }, [queryClient, isFetching, isLoading, location]);
+  }, [queryClient, isFetching, location]);
 };

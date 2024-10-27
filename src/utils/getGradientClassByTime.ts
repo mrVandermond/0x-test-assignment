@@ -5,6 +5,9 @@ const enum BackgroundGradient {
   Night = 'night-gradient',
 }
 
+/**
+ * Returns gradient classname according to user local time
+ */
 export function getGradientClassByTime() {
   const hours = new Date().getHours();
 

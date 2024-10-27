@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 
+/**
+ * Subscribes to any request error and exposes a handler to retry all failed requests
+ */
 export const useErrorSubscription = () => {
   const [error, setError] = useState<Error | null>(null);
   const [refetchHandlers, setRefetchHandlers] = useState<(() => void)[]>([]);

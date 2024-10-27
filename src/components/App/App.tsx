@@ -9,7 +9,7 @@ import {
 import {
   useGeolocation,
   useErrorSubscription,
-  useLoadingStatus,
+  useInitialFetchingStatus,
   useFetchingStatus,
   useAdjustTemperatureRange,
 } from '../../hooks';
@@ -27,13 +27,13 @@ export default function App() {
   const {
     coords,
     error: geolocationError,
-    refetchGeolocation,
+    retryRequestGeolocation,
     isAwaitingGeolocation,
   } = useGeolocation();
 
   const { data: location, isFetching: isLocationFetching } = useLocationQuery(coords);
   const { error: apiError, handleRefetch } = useErrorSubscription();
-  const isLoading = useLoadingStatus([
+  const isInitialFetching = useInitialFetchingStatus([
     getCurrentWeatherQueryOptions(location),
     getHourlyForecastQueryOptions(location),
     getDailyForecastQueryOptions(location),
@@ -44,7 +44,7 @@ export default function App() {
     getDailyForecastQueryOptions(location),
   ]);
 
-  useAdjustTemperatureRange(isLoading, isFetching, location);
+  useAdjustTemperatureRange(isInitialFetching || isFetching, location);
 
   const isUpdating = isAwaitingGeolocation || isLocationFetching || isFetching;
 
@@ -52,7 +52,7 @@ export default function App() {
     return (
       <GeolocationError
         error={geolocationError}
-        onRefetchGetGeolocation={refetchGeolocation}
+        onRefetchGetGeolocation={retryRequestGeolocation}
       />
     )
   }
@@ -68,7 +68,7 @@ export default function App() {
     )
   }
 
-  if ((isAwaitingGeolocation && !coords) || isLoading || !location) {
+  if ((isAwaitingGeolocation && !coords) || isInitialFetching || !location) {
     return <Loader />;
   }
 
