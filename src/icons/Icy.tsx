@@ -10,7 +10,9 @@ export const Icy = memo(() => (
   >
     <path
       d="M5.1665 4.16667L7.26025 12.6667L9.34359 10.4271L12.4686 20.8333L15.5936 10.4271L17.6665 17.7083L21.8332 4.17708L5.1665 4.16667Z"
-      stroke="white" strokeLinecap="round" strokeLinejoin="round"
+      stroke="white"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M4.125 4.16667H22.875"
