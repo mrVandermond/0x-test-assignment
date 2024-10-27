@@ -15,7 +15,6 @@ Besides `React`, I used `@tanstack/react-query` and `@tanstack/query-sync-storag
 ### Technical solution explanation
 
 #### React-query
-
 I used `react-query` for efficient data management and caching data to local storage (with persister).
 
 Main behaviour is the following - if there is data then we restore it and immediately expose to components,
@@ -25,7 +24,6 @@ Depends on the internet connection and cache age `react-query` decides refresh d
 which allows use application in offline mode just with cache
 
 #### Geolocation
-
 App firstly tries to identify user's geolocation (and requests permission to geolocation) and then based on it fetch all data.
 If user doesn't give the permission then App reports about an error with geolocation and provided retry button.
 Last geolocation coordinates caches to localStorage and further requests will use that cache if the user turned on geolocation on the device.
@@ -49,6 +47,14 @@ For that reason I created `useAdjustTemperatureRange` custom hook where on every
 current temperature and first daily forecast compares and adjusted if needed.
 
 I think the better solution is changing the API response on server, but this is not the case.
+
+#### Range meter 10-day forecast
+I've checked how range meter should work on the IPhone and there is the clip which shows the range and background gradient is under.
+As a result user see only part of the gradient in accordance with forecast. I've tries to use clip-path here to implement similar behavior,
+but unfortunately `rect` css function isn't supported wider enough. So, I leaved it as is to get as much as possible browser support
+and user will see whole gradient everywhere.
+
+I think it's better solution instead of hurt some user experience.
 
 ### Folder structure
 I split files to meaningful folders for quick navigation and focusing. Here they are:
@@ -78,3 +84,12 @@ Here some measurements of application performance
 ![lighthouse_4g_no_cache](./measurements/lighthouse_4g_no_cache.png)
 
 **4g preset which used above**: Download: 4000 Mbit/s, Upload: 3000 Mbit/s, Latency: 20ms
+
+# How to run
+1. Create `.env` file in root of the project
+2. Put `REACT_APP_WEATHER_API_KEY` env variable with api key for [AccuWeather app](https://developer.accuweather.com/user/me/apps)
+3. If your AccuWeather app is free trial app then you should change couple urls in `src/api/endpoints.ts` file
+   1. `/forecasts/v1/daily/10day/` replace with `/forecasts/v1/daily/5day`
+   2. `/forecasts/v1/hourly/24hour` replace with `/forecasts/v1/hourly/12hour`
+4. Run `npm install --ci`
+5. Run `npm start` or `npm run build`

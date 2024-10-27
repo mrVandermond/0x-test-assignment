@@ -41,7 +41,7 @@ export async function fetchCurrentWeather(locationKey?: string): Promise<Current
 export async function fetchHourlyForecast(locationKey?: string): Promise<HourlyForecast[] | undefined> {
   if (!locationKey) return;
 
-  const data = await weatherFetcher.fetch<HourlyForecastAPI[]>(`/forecasts/v1/hourly/12hour/${locationKey}`, {
+  const data = await weatherFetcher.fetch<HourlyForecastAPI[]>(`/forecasts/v1/hourly/24hour/${locationKey}`, {
     apikey: process.env.REACT_APP_WEATHER_API_KEY,
     metric: true,
   });
@@ -61,7 +61,7 @@ export async function fetchHourlyForecast(locationKey?: string): Promise<HourlyF
 export async function fetchDailyForecast(locationKey?: string): Promise<DailyForecast[] | undefined> {
   if (!locationKey) return;
 
-  const data = await weatherFetcher.fetch<DailyForecastsAPI>(`/forecasts/v1/daily/5day/${locationKey}`, {
+  const data = await weatherFetcher.fetch<DailyForecastsAPI>(`/forecasts/v1/daily/10day/${locationKey}`, {
     apikey: process.env.REACT_APP_WEATHER_API_KEY,
     metric: true,
     details: true,
