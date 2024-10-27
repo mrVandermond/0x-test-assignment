@@ -10,9 +10,10 @@ import {
 } from '../constants';
 import {
   currentHourlyForecastSelector,
-  currentTemperatureSelector, temperatureRangeForeTodaySelector,
+  currentTemperatureSelector,
+  temperatureRangeForeTodaySelector,
   temperatureRangeSelector,
-} from '../selectors';
+} from './selectors';
 import { GeolocationCoords } from '../types/geolocation';
 
 import {

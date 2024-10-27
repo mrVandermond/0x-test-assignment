@@ -1,4 +1,4 @@
-import { CurrentWeather, DailyForecast, HourlyForecast } from '../api';
+import { CurrentWeather, DailyForecast, HourlyForecast } from './types';
 
 export function currentTemperatureSelector(data: CurrentWeather | undefined) {
   if (!data) return;
