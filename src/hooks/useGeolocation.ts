@@ -1,23 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { GeolocationCoords } from '../types/geolocation';
-
-const GEOLOCATION_CACHE_KEY = 'geolocation';
-
-function restoreGeolocationCoords(): GeolocationCoords | undefined {
-  try {
-    const geolocation = localStorage.getItem(GEOLOCATION_CACHE_KEY);
-
-    if (!geolocation) return;
-
-    return JSON.parse(geolocation);
-  } finally {
-  }
-}
-
-function cacheGeolocationCoords(coords: GeolocationCoords) {
-  localStorage.setItem(GEOLOCATION_CACHE_KEY, JSON.stringify(coords));
-}
+import { cacheGeolocationCoords, restoreGeolocationCoords } from '../utils';
 
 /**
  * Requests geolocation coordinates
