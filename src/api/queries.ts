@@ -3,8 +3,9 @@ import { queryOptions, skipToken, useQuery } from '@tanstack/react-query';
 import {
   CURRENT_WEATHER_QUERY_KEY,
   DAILY_FORECAST_QUERY_KEY,
-  DAY_IN_MS,
-  HOURLY_FORECAST_QUERY_KEY, LOCATION_QUERY_KEY,
+  HOUR_IN_MS,
+  HOURLY_FORECAST_QUERY_KEY,
+  LOCATION_QUERY_KEY,
   TEN_MINS_IN_MS,
   THIRTY_MINS_IN_MS
 } from '../constants';
@@ -19,7 +20,8 @@ import { GeolocationCoords } from '../types/geolocation';
 import {
   fetchCurrentWeather,
   fetchDailyForecast,
-  fetchHourlyForecast, fetchLocationByGeolocation,
+  fetchHourlyForecast,
+  fetchLocationByGeolocation,
 } from './endpoints';
 import { Location } from './types';
 
@@ -42,7 +44,7 @@ export const getHourlyForecastQueryOptions = (location: Location | undefined) =>
 });
 
 export const getDailyForecastQueryOptions = (location: Location | undefined) => queryOptions({
-  staleTime: DAY_IN_MS,
+  staleTime: HOUR_IN_MS,
   queryKey: [DAILY_FORECAST_QUERY_KEY, location],
   queryFn: location ? () => fetchDailyForecast(location.key) : skipToken,
 });

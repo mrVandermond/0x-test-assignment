@@ -7,7 +7,6 @@ import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client
 import './style.css';
 
 import App from './components/App/App';
-import { getGradientClassByTime } from './utils';
 import { DAY_IN_MS } from './constants';
 
 const start = () => {
@@ -30,9 +29,6 @@ const start = () => {
     storage: window.localStorage,
     key: '0+X_WeatherApp',
   });
-
-  // Set the background of root element
-  rootElement.classList.add(getGradientClassByTime());
 
   const root = createRoot(rootElement);
   const persistOptions = {

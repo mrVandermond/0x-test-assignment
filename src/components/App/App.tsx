@@ -12,6 +12,7 @@ import {
   useInitialFetchingStatus,
   useFetchingStatus,
   useAdjustTemperatureRange,
+  useBackground,
 } from '../../hooks';
 import { CurrentWeather } from '../CurrentWeather/CurrentWeather';
 import { HourlyForecast } from '../HourlyForecast/HourlyForecast';
@@ -24,6 +25,8 @@ import { BackgroundLoader } from '../BackgroundLoader/BackgroundLoader';
 import styles from './App.module.css';
 
 export default function App() {
+  useBackground();
+
   const {
     coords,
     error: geolocationError,
