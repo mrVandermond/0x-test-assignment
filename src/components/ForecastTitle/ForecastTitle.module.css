@@ -1,0 +1,7 @@
+.forecastTitle {
+    border-bottom: 1px solid var(--primary-white-color);
+    font-size: 1.3rem;
+    letter-spacing: 0.05em;
+    padding-bottom: 8px;
+    text-transform: uppercase;
+}

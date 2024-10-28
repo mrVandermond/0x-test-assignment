@@ -1,0 +1,37 @@
+.hourlyForecast {
+    border-radius: 15px;
+    background-color: var(--light-white-color);
+    border: 1px solid var(--light-white-color);
+    padding: 15px;
+}
+
+.scroller {
+    overflow: scroll;
+}
+
+.hourlyForecastList {
+    display: flex;
+}
+
+.hourlyForecastItem {
+    width: 4.7rem;
+    min-width: 4.7rem;
+    text-align: center;
+    margin: 0 10px;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hourlyForecastItem:first-child {
+    margin-left: 0;
+}
+
+.hourlyForecastItem:last-child {
+    margin-right: 0;
+}
+
+.hourlyForecastItem div + div {
+    margin-top: 15px;
+}

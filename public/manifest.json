@@ -1,0 +1,12 @@
+{
+  "name": "0+X Weather App",
+  "start_url": "/",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "./icons/weather-icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }
+  ]
+}

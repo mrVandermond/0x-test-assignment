@@ -1,0 +1,19 @@
+.backgroundLoaderContainer {
+    position: fixed;
+    bottom: 5%;
+    left: calc(50% - 57px);
+    z-index: 1000;
+}
+
+.backgroundLoader {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 5px;
+    background-color: #2a2e31;
+    border: 1px solid #2a2e31;
+}
+
+.backgroundLoaderText {
+    margin-right: 8px;
+}

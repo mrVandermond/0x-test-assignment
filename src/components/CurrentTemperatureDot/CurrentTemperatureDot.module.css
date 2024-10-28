@@ -1,0 +1,13 @@
+/* Shows current temperature for today */
+.rangeCurrent {
+    --left-offset: 0%;
+
+    position: absolute;
+    top: -1px;
+    height: 6px;
+    width: 6px;
+    left: calc(var(--left-offset) - 3px);
+    border-radius: 50%;
+    background-color: #fff;
+    border: 1px solid #000;
+}

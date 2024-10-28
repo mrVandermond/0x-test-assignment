@@ -1,0 +1,80 @@
+.dailyForecastRow {
+    padding: 5px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    align-items: center;
+    font-size: 2rem;
+    border-bottom: 1px solid var(--primary-white-color);
+    min-height: 52px;
+}
+
+.dailyForecastRow:last-child {
+    border-bottom: none;
+}
+
+.dailyForecastRange {
+    margin-left: auto;
+    width: 175px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dailyTemperatureMin,
+.dailyTemperatureMax {
+    width: 40px;
+    text-align: center;
+}
+
+.dailyTemperatureMin {
+    color: var(--primary-white-color);
+}
+
+.dailyForecastConditions {
+    text-align: center;
+    line-height: 1em;
+}
+
+.probability {
+    font-size: 1.2rem;
+    line-height: 0.8em;
+    margin-bottom: 5px;
+    color: #81cffa;
+    text-shadow: 1px 1px 1px #5b90b1;
+}
+
+/* Shows the range of lowest and highest
+   temperatures of the 10-day period */
+.range {
+    flex: 1 1;
+    background-color: rgba(0, 0, 0, 0.15);
+    height: 4px;
+    border-radius: 5px;
+    position: relative;
+}
+
+/* Shows the range of lowest and highest
+   temperatures of each day in comparison
+   to the range of the whole period */
+.rangeMeter {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.rangeMeter::after {
+    content: '';
+    display: block;
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    background: linear-gradient(to right, #96d0a7, #ef8734) center;
+    border-radius: 5px;
+}
